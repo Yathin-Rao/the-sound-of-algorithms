@@ -1,0 +1,50 @@
+<script>
+
+    var N = 50;
+
+    var Numobj = function(num,freq,attack,decay,type){
+        this.num = num;
+        this.freq = freq;
+        this.attack = attack;
+        this.decay = decay;
+        this.type = type;
+    }
+
+    function getRandomArray(N){
+        var Amaj = [220.00,233.08,246.94,261.63,277.18,293.66,311.13,329.63,349.23,369.99,392.00,415.30,440.00,466.16,493.88,523.25,554.37,587.33,622.25,659.25,698.46,739.99,783.99,830.61,880.00]
+        var types = ['wave','sawtooth','triangle'];
+        var decay = [250,300,350,400,450,600,700,850,500,550];
+
+        var randarr = [] ;
+
+
+        for (i = 0; i < N; i++) {
+            attackvar = 10;
+            decayvar = Amaj[Math.floor(Math.random()*Amaj.length)]
+            numvar = Math.floor((Math.random() * 200)+1);
+            typevar = types[Math.floor(Math.random()*types.length)]
+            freqvar = Amaj[Math.floor(Math.random()*Amaj.length)]
+            randarr.push(new Numobj(numvar,freqvar,attackvar,decayvar,typevar));
+        }
+
+        return randarr;        
+    }
+
+    function bubbleSort(arr){
+       console.log(arr);
+       var len = arr.length;
+       for (var i = len-1; i>=0; i--){
+         for(var j = 1; j<=i; j++){
+           if(arr[j-1]>arr[j]){
+               var temp = arr[j-1];
+               arr[j-1] = arr[j];
+               arr[j] = temp;
+            }
+         }
+       }
+       console.log(arr);
+       return arr;
+    }
+
+    bubbleSort(getRandomArray(N)); //[2, 3, 4, 5, 7, 9]
+</script>

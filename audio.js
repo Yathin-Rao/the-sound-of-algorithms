@@ -13,7 +13,15 @@
             gain = audio.createGain(),
             osc = audio.createOscillator();
 
-        gain.connect(audio.destination);
+
+        filter = audio.createBiquadFilter()
+        filter.type = "highpass"
+        filter.frequency = 350;
+        //filter.Q = 
+        filter.gain.value = 25;
+        filter.connect(audio.destination);
+
+        gain.connect(filter);
         gain.gain.setValueAtTime(0, audio.currentTime);
         gain.gain.linearRampToValueAtTime(1, audio.currentTime + attack / 1000);
         gain.gain.linearRampToValueAtTime(0, audio.currentTime + decay / 1000);

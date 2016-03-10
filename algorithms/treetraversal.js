@@ -3,22 +3,25 @@ function BinaryTree(value, left, right) {
     this.left = left;
     this.right = right;
 }
-BinaryTree.prototype.preorder  = function(f) {this.walk(f,['this','left','right'])}
-BinaryTree.prototype.inorder   = function(f) {this.walk(f,['left','this','right'])}
-BinaryTree.prototype.postorder = function(f) {this.walk(f,['left','right','this'])}
-BinaryTree.prototype.walk = function(func, order) {
+
+BinaryTree.prototype.preorder  = function() {this.walk(['this','left','right'])}
+BinaryTree.prototype.inorder   = function() {this.walk(['left','this','right'])}
+BinaryTree.prototype.postorder = function() {this.walk(['left','right','this'])}
+
+BinaryTree.prototype.walk = function(order) {
     for (var i in order) 
         switch (order[i]) {
-            case "this": func(this.value); break;
-            case "left": if (this.left) this.left.walk(func, order); break;
-            case "right": if (this.right) this.right.walk(func, order); break;
+            case "this": console.log(this.value); break;
+            case "left": if (this.left) this.left.walk(order); break;
+            case "right": if (this.right) this.right.walk(order); break;
         }
 }
-BinaryTree.prototype.levelorder = function(func) {
+
+BinaryTree.prototype.levelorder = function() {
     var queue = [this];
     while (queue.length != 0) {
         var node = queue.shift();
-        func(node.value);
+        console.log(node.value);
         if (node.left) queue.push(node.left);
         if (node.right) queue.push(node.right);
     }
@@ -31,10 +34,24 @@ function createBinaryTreeFromArray(ary) {
     if (ary[2]) right = createBinaryTreeFromArray(ary[2]);
     return new BinaryTree(ary[0], left, right);
 }
+
+
+function mycreateBinaryTreeFromArray(array,nodeindex){
+   var left = null, right = null;
+   if (array[nodeindex*2+1]) {
+        //console.log("hi "+ 
+        left = mycreateBinaryTreeFromArray(array,nodeindex*2+1);
+    }
+   if (array[nodeindex*2+2]) {
+        right = mycreateBinaryTreeFromArray(array,nodeindex*2+2);
+    }
+   return new BinaryTree(array[nodeindex],left,right);
+}
  
-var tree = createBinaryTreeFromArray([1, [2, [4, [7]], [5]], [3, [6, [8],[9]]]]);
- 
-print("*** preorder ***");   tree.preorder(print); 
-print("*** inorder ***");    tree.inorder(print); 
-print("*** postorder ***");  tree.postorder(print);
-print("*** levelorder ***"); tree.levelorder(print);
+var tree = mycreateBinaryTreeFromArray([1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],0);//([1, [2, [4, [7]], [5]], [3, [6, [8],[9]]]]);
+
+
+console.log("*** preorder ***");   tree.preorder(); 
+console.log("*** inorder ***");    tree.inorder(); 
+console.log("*** postorder ***");  tree.postorder();
+console.log("*** levelorder ***"); tree.levelorder();

@@ -1,95 +1,43 @@
-/*
- * Iterative merge sort implementation in JavaScript
- * Copyright (c) 2009-2011 Nicholas C. Zakas
- * 
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- * 
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- * 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+function merge(left, right, arr) {
+  var a = 0;
  
-/**
- * Merges to arrays in order based on their natural
- * relationship.
- * @param {Array} left The first array to merge.
- * @param {Array} right The second array to merge.
- * @return {Array} The merged array.
- */
-
-
-
-
-
-function merge(left, right){
-    var result = [];
-
-    while (left.length > 0 && right.length > 0){
-        if (left[0].num < right[0].num){
-            result.push(left.shift());
-        } else {
-            result.push(right.shift());
-        }
-    }
-
-    result = result.concat(left).concat(right);
-    
-    //make sure remaining arrays are empty
-    left.splice(0, left.length);
-    right.splice(0, right.length);
-    
-    return result;
+  while (left.length && right.length) {
+    arr[a++] = (right[0] < left[0]) ? right.shift() : left.shift();
+  }
+  while (left.length) {
+    arr[a++] = left.shift();
+  }
+  while (right.length) {
+    arr[a++] = right.shift();
+  }
 }
-
-
-/**
- * Sorts an array in ascending natural order using
- * merge sort.
- * @param {Array} items The array to sort.
- * @return {Array} The sorted array.
- */
-function mergeSort(items){
-
-    // Terminal condition - don't need to do anything for arrays with 0 or 1 items
-    if (items.length < 2) {
-        return items;
-    }
-
-    var work = [],
-        i,
-        len;
-        
-        
-    for (i=0, len=items.length; i < len; i++){
-        work.push([items[i]]);
-    }
-    work.push([]);  //in case of odd number of items
-
-    for (var lim=len; lim > 1; lim = Math.floor((lim+1)/2)){
-        for (var j=0,k=0; k < lim; j++, k+=2){
-            work[j] = merge(work[k], work[k+1]);
-            for(i = 0; i <work[j].length ; i++){
-                console.log(work[j][i].num);
-                createOscillator(work[j][i].freq,work[j][i].attack,work[j][i].decay,work[j][i].type);
-                pause(work[j][i].decay);
-            }
-
-            console.log("Next iteration");
-        }
-        work[j] = [];  //in case of odd number of items
-    }
-
-    return work[0];
+ 
+function mSort(arr, tmp, len) {
+  if (len === 1) { return; }
+ 
+  var m = Math.floor(len / 2),
+      tmp_l = tmp.slice(0, m),
+      tmp_r = tmp.slice(m);
+ 
+  mSort(tmp_l, arr.slice(0, m), m);
+  mSort(tmp_r, arr.slice(m), len - m);
+  merge(tmp_l, tmp_r, arr);
+  console.log("new iteration")
+  addnotes(arr, createOscillator4);
 }
+ 
+function mergeSort(arr) {
+  mSort(arr, arr.slice(), arr.length);
+  time = audio.currentTime;
+ 
+   for (i = 0; i < notesbs.length; i++) {
+        //console.log(notesbs[i].freq);
+        //notesbs[i].start(cumtime[i]);
+        //notesbs[i].stop(time+cumtime[i+1]);
+        notesbs[i].start(i);
+        notesbs[i].stop(time+i+1);
+   }
+}
+ 
+//var arr = [1, 5, 2, 7, 3, 9, 4, 6, 8];
+//merge_sort(arr); // arr will now: 1, 2, 3, 4, 5, 6, 7, 8, 9

@@ -1,16 +1,3 @@
-var notesbs = []
-var cumtime = [0];
-var timesum = 0;
-
-function addnotes(array){
-    for (var i = 0; i < array.length; i++){
-        timesum += array[i]/1000;
-        cumtime.push(timesum);
-        //console.log(timesum);
-        notesbs.push(createOscillator4(array[i]));
-    }
-}
-
 function quickSort(array, less) {
  
   function swap(i, j) {
@@ -40,7 +27,7 @@ function quickSort(array, less) {
         }
       } while (left_new <= right_new);
 
-      addnotes(array);
+      addnotes(array, createOscillator4);
  
       quicksort(left, right_new);
       quicksort(left_new, right);

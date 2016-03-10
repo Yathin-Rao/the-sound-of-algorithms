@@ -24,3 +24,17 @@ function shuffle(array) {
 
   return array;
 }
+
+
+var notesbs = []
+var cumtime = [0];
+var timesum = 0;
+
+function addnotes(array,createOscillator_func){
+    for (var i = 0; i < array.length; i++){
+        timesum += array[i]/1000;
+        cumtime.push(timesum);
+        //console.log(timesum);
+        notesbs.push(createOscillator_func(array[i]));
+    }
+}

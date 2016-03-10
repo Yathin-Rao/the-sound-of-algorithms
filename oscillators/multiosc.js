@@ -1,33 +1,17 @@
-function playOsc2(){
-    window.osc3 = audio.createOscillator();
-    window.osc2 = audio.createOscillator();
-    window.osc = audio.createOscillator();
-    freq = getFrequency();
-    attack = 50;
-    decay = 50;  
-    type = 'sine';
-    return createOscillator2(freq,attack,decay,type);
-}
-
-function stopOsc2(){
-   osc.stop();
-   osc2.stop();
-   osc3.stop();
-}
-
-function createOscillator2(freq,attk,dk,typ) {
-    var attack = attk,//10
-        decay = freq//dk,//250
-        gain = audio.createGain(),
-        gain2 = audio.createGain();
+function createOscillator2(freq,type) {
+    osc3 = audio.createOscillator();
+    osc2 = audio.createOscillator();
+    osc = audio.createOscillator();
+    gain = audio.createGain(),
+    gain2 = audio.createGain();
 
     osc.frequency.value = freq;
     osc2.frequency.value = freq - 1;
     osc3.frequency.value = freq + 2;
 
-    osc.type = typ;
+    osc.type = type;
     osc2.type = 'triangle';
-    osc3.type = 'triangle';
+    osc3.type = 'square';
 
     gain.gain.value = 1;
     gain2.gain.value = 0.1;
@@ -38,7 +22,31 @@ function createOscillator2(freq,attk,dk,typ) {
     gain.connect(audio.destination);
     gain2.connect(audio.destination);
 
-    osc.start(0);
-    osc2.start(0);
-    osc3.start(0);
+    //console.log("An oscillator was created");
+
+    var osces = new function(){
+        this.osc = osc;
+        this.osc3 = osc3;
+        this.osc2 = osc2;
+
+        this.freq = freq;
+
+        this.stop = function(durn){
+            this.osc.stop(durn);
+            this.osc2.stop(durn);
+            this.osc3.stop(durn);
+        };
+
+        this.start = function(time){
+            //console.log("start was called with freq "+this.freq+" and time "+time);
+            this.osc.start(time);
+            //console.log("here");
+            this.osc2.start(time);
+            //console.log("here");
+            this.osc3.start(time);
+        };
+    }
+
+    return osces;
+
 }

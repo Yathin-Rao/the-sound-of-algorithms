@@ -1,16 +1,3 @@
-function playOsc1(){
-    window.oscillator = audio.createOscillator();
-    freq = getFrequency();
-    attack = 50;
-    decay = 50;  
-    type = 'sine';
-    return createOscillator1(freq,attack,decay,type);
-}
-
-function stopOsc1(){
-    oscillator.stop();
-}
-
 function makeDistortionCurve(amount) {
   var k = typeof amount === 'number' ? amount : 50,
     n_samples = 44100,
@@ -25,16 +12,17 @@ function makeDistortionCurve(amount) {
   return curve;
 };
 
-function createOscillator1(freq,attk,dk,typ) {
-    var gainNode = audio.createGain();
-    var distortion = audio.createWaveShaper();
+function createOscillator1(freq,type,durn) {
+    oscillator = audio.createOscillator();
+    gainNode = audio.createGain();
+    distortion = audio.createWaveShaper();
 
     distortion.curve = makeDistortionCurve(7);
     gainNode.gain.value = 1.0
     oscillator.connect(distortion);
     distortion.connect(gainNode);
     gainNode.connect(audio.destination);
-    oscillator.type = 'triangle'; // sine wave — other values are 'square', 'sawtooth', 'triangle' and 'custom'
+    oscillator.type = type; 
     oscillator.frequency.value = freq; // value in hertz
-    oscillator.start();
+    return oscillator;
 }

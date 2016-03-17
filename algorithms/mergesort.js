@@ -1,5 +1,8 @@
+var mygain = 0;
+
 function merge(left, right, arr) {
   var a = 0;
+  mygain += 0.1;
  
   while (left.length && right.length) {
     arr[a++] = (right[0] < left[0]) ? right.shift() : left.shift();
@@ -23,7 +26,9 @@ function mSort(arr, tmp, len) {
   mSort(tmp_r, arr.slice(m), len - m);
   merge(tmp_l, tmp_r, arr);
   console.log("new iteration")
-  addnotes(arr, createOscillator4);
+  console.log(arr);
+  console.log("gain: " + mygain);
+  addnotes(arr, createOscillator4, mygain);
 }
  
 function mergeSort(arr) {

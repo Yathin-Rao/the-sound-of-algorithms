@@ -1,4 +1,4 @@
-function createOscillator2(freq,type) {
+function createOscillator2(freq,type,gainvar) {
     osc3 = audio.createOscillator();
     osc2 = audio.createOscillator();
     osc = audio.createOscillator();
@@ -13,8 +13,9 @@ function createOscillator2(freq,type) {
     osc2.type = 'triangle';
     osc3.type = 'square';
 
-    gain.gain.value = 1;
-    gain2.gain.value = 0.1;
+    console.log("gainvar = "+gainvar);
+    gain.gain.value = gainvar;
+    gain2.gain.value = gainvar/10;
 
     osc.connect(gain);
     osc2.connect(gain2);

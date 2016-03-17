@@ -20,7 +20,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
- 
 /**
  * An insertion sort implementation in JavaScript. The itemsay
  * is sorted in-place.
@@ -29,48 +28,54 @@
  */
 var notesbs = []
 var cumtime = [0];
-function insertionSort(items) {
-   timesum = 0;
 
-    var len     = items.length,     // number of items in the itemsay
-        value,                      // the value currently being compared
-        i,                          // index into unsorted section
-        j;                          // index into sorted section
-    
-    for (i=0; i < len; i++) {
-    
+function insertionSort(items) {
+    timesum = 0;
+
+    var len = items.length, // number of items in the itemsay
+        value, // the value currently being compared
+        i, // index into unsorted section
+        j; // index into sorted section
+
+    //console.log(items);
+    for (i = 1; i < len; i++) {
+
         // store the current value because it may shift later
         value = items[i];
-        
+
         /*
          * Whenever the value in the sorted section is greater than the value
          * in the unsorted section, shift all items in the sorted section over
          * by one. This creates space in which to insert the value.
          */
-        for (j=i-1; j > -1 && items[j].num > value.num; j--) {
-            items[j+1] = items[j];
+        j = i;
+        while (j > 0 && items[j-1] > value){
+            items[j] = items[j-1];
+            j--;
         }
-     for (j = 1; j <= len-1; j++){
-        timesum += items[j]/1000;
-        cumtime.push(timesum);
-        //console.log(timesum);
-        notesbs.push(createOscillator2(items[j],'sine',items[j]));        
+
+        items[j] = value;
+
+        var gain = (i + 1.0)/len;
+        //console.log(items);
+
+        for (j = 0; j <= len - 1; j++) {
+            timesum += items[j] / 1000;
+            cumtime.push(timesum);
+            notesbs.push(createOscillator2(items[j], 'sine', gain));
+        }
+
     }
+    time = audio.currentTime;
 
-        items[j+1] = value;
-    }
-   time = audio.currentTime;
 
-   //console.log(cumtime.length)
-   //console.log(notesbs.length);
-
-   for (i = 0; i < notesbs.length; i++) {
-        //console.log(notesbs[i].freq);
+    for (i = 0; i < notesbs.length; i++) {
         //notesbs[i].start(cumtime[i]);
         //notesbs[i].stop(time+cumtime[i+1]);
+        console.log("New iteration");
         notesbs[i].start(i);
-        notesbs[i].stop(time+i+1);
-   }
-    
+        notesbs[i].stop(time + i + 1);
+    }
+
     return items;
 }

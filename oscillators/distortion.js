@@ -12,13 +12,13 @@ function makeDistortionCurve(amount) {
   return curve;
 };
 
-function createOscillator1(freq,type,durn) {
+function createOscillator1(freq,type,durn,gain) {
     oscillator = audio.createOscillator();
     gainNode = audio.createGain();
     distortion = audio.createWaveShaper();
 
     distortion.curve = makeDistortionCurve(7);
-    gainNode.gain.value = 1.0
+    gainNode.gain.value = gain
     oscillator.connect(distortion);
     distortion.connect(gainNode);
     gainNode.connect(audio.destination);

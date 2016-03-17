@@ -1,8 +1,18 @@
 <h2>Bubble Sort</h2>
+<script src="js/soundfont-player.min.js"></script>
+<script src="js/freq_to_note-no-flats.js"></script>
 <script src="js/main.js"></script>
+<script src="js/scales.js"></script>
 <script src="oscillators/distortion.js"></script>
 <script src="algorithms/bubblesort.js"></script>
 <script>
-notes = shuffle(med.slice(0,10));
+notes = shuffle(G_pent_minor.slice(10,20));
 bubbleSort(notes);
+/*
+var instrument = soundfont.instrument('acoustic_grand_piano');
+instrument.onready(function() {
+    console.log("Instrument ready");
+    bubbleSort(notes);
+});
+*/
 </script>

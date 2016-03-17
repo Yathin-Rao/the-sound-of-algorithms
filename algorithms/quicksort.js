@@ -1,3 +1,5 @@
+var mygain = 0;
+
 function quickSort(array, less) {
  
   function swap(i, j) {
@@ -27,7 +29,10 @@ function quickSort(array, less) {
         }
       } while (left_new <= right_new);
 
-      addnotes(array, createOscillator4);
+      mygain += 0.1;
+      console.log("gain: "+mygain);
+      console.log(array);
+      addnotes(array, createOscillator4, mygain);
  
       quicksort(left, right_new);
       quicksort(left_new, right);

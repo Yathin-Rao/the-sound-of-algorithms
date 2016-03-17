@@ -1,12 +1,11 @@
-function createOscillator4(freq) {
+function createOscillator4(freq,gainvar) {
     osc = audio.createOscillator();
     gain = audio.createGain(),
 
-    console.log(freq);
     osc.frequency.value = freq;
     osc.type = 'sine';
 
-    gain.gain.value = 1;
+    gain.gain.value = gainvar;
 
     osc.connect(gain);
     gain.connect(audio.destination);

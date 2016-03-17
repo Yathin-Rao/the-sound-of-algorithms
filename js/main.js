@@ -1,4 +1,5 @@
 var audio = new window.AudioContext();
+var tuna = new Tuna(audio);
 var soundfont = new Soundfont(audio);
 
 function shuffle(array) {

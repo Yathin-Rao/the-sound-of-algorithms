@@ -42,8 +42,8 @@ function bubbleSort(arr){
         console.log("New iteration");
         //notesbs[i].start(cumtime[i]);
         //notesbs[i].stop(time+cumtime[i+1]);
-        notesbs[i].start(i);
-        notesbs[i].stop(time+i+1);
+        notesbs[i].start(i/2);
+        notesbs[i].stop(time+i/2);
    }
    
 }
